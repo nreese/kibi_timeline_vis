@@ -52,11 +52,12 @@ define(function (require) {
               group.id = _pickNextFreeId(existingGroupIds);
             }
 
-            if (!group.groupLabel) {
-              group.groupLabel = group.savedSearchId;
-            }
             if (group.savedSearchId) {
-              savedSearches.get(group.savedSearchId).then(function (savedSearch) {
+              savedSearches.get(group.savedSearchId)
+              .then(function (savedSearch) {
+                if (!group.groupLabel) {
+                  group.groupLabel = savedSearch.title;
+                }
                 group.indexPatternId = savedSearch.searchSource._state.index.id;
               });
             }
